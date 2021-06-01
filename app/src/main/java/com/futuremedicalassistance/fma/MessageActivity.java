@@ -2,6 +2,7 @@ package com.futuremedicalassistance.fma;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
@@ -23,7 +24,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class MessageActivity extends AppCompatActivity {
 
@@ -38,6 +41,9 @@ public class MessageActivity extends AppCompatActivity {
     DatabaseReference reference;
     Intent intent;
 
+    MessageAdapter messageAdapter;
+    ArrayList<Message> messages;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +53,13 @@ public class MessageActivity extends AppCompatActivity {
         username = findViewById(R.id.nameTextView);
         messageEditText = findViewById(R.id.messageEditText);
         sendButton = findViewById(R.id.sendButton);
+
+        recyclerView = findViewById(R.id.messageRecyclerView);
+        recyclerView.setHasFixedSize(true);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+        linearLayoutManager.setStackFromEnd(true);
+        recyclerView.setLayoutManager(linearLayoutManager);
 
         intent = getIntent();
         String userId = intent.getStringExtra("userId");
@@ -65,6 +78,8 @@ public class MessageActivity extends AppCompatActivity {
                 }else{
                     Glide.with(MessageActivity.this).load(users.getImageURL()).into(imageView);
                 }
+
+                readMessage(firebaseUser.getUid(),userId);
             }
 
             @Override
@@ -98,5 +113,32 @@ public class MessageActivity extends AppCompatActivity {
         hashMap.put("message", message);
 
         reference.child("Chats").push().setValue(hashMap);
+    }
+
+    private void readMessage(String myId, String userId){
+        messages = new ArrayList<>();
+        reference = FirebaseDatabase.getInstance().getReference("Chats");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                messages.clear();
+                for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    Message message = dataSnapshot.getValue(Message.class);
+                    if(message.getReceiver().equals(myId) && message.getSender().equals(userId) ||
+                            message.getReceiver().equals(userId) && message.getSender().equals(myId)){
+
+                        messages.add(message);
+                    }
+                    messageAdapter = new MessageAdapter(MessageActivity.this, messages);
+                    recyclerView.setAdapter(messageAdapter);
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 }
