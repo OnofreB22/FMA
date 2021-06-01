@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "451600570101",
+    "firebase_url": "https://futuremedical-17e57-default-rtdb.firebaseio.com",
+    "project_id": "futuremedical-17e57",
+    "storage_bucket": "futuremedical-17e57.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:451600570101:android:f21673eda5205f8a2ed7bc",
+        "android_client_info": {
+          "package_name": "com.futuremedicalassistance.fma"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "451600570101-hvgprv6ko5blfgkkd8jvceelg44u0jdt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAw43XuKurdsBIdirA5bnKmS29KuREK3H4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "451600570101-hvgprv6ko5blfgkkd8jvceelg44u0jdt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
