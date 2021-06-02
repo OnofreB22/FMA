@@ -1,11 +1,15 @@
 package com.futuremedicalassistance.fma;
 
+import android.os.Bundle;
+
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -15,28 +19,35 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class GuideActivity extends AppCompatActivity {
+public class GuideFragment extends Fragment {
 
     RecyclerView recyclerView;
     DatabaseReference databaseReference;
-    GuideAdapter adapter;
+    GuideAdapter guideAdapter;
     ArrayList<Guide> list;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_guide);
+    public GuideFragment() {
+    }
 
-        recyclerView = findViewById(R.id.guideRecyclerView);
-        databaseReference = FirebaseDatabase.getInstance().getReference("Guides");
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        View view = inflater.inflate(R.layout.fragment_guide, container, false);
+
+        recyclerView = view.findViewById(R.id.guideRecyclerView);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("Guides");
 
         list = new ArrayList<>();
-        adapter = new GuideAdapter(this,list);
+        ReadGuides();
 
-        recyclerView.setAdapter(adapter);
+        return view;
+    }
 
+    private void ReadGuides() {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -45,8 +56,9 @@ public class GuideActivity extends AppCompatActivity {
                     list.add(guide);
 
                 }
-
-                adapter.notifyDataSetChanged();
+                guideAdapter = new GuideAdapter(getContext(),list);
+                guideAdapter.notifyDataSetChanged();
+                recyclerView.setAdapter(guideAdapter);
             }
 
             @Override
