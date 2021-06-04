@@ -20,7 +20,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class LogInActivity extends AppCompatActivity {
     EditText emailEditText, passwordEditText;
     Button logInButton;
-    TextView registerTextView;
+    TextView registerTextView, forgotPasswordTextView;
     FirebaseAuth firebaseAuth;
     FirebaseUser firebaseUser;
 
@@ -51,7 +51,14 @@ public class LogInActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(LogInActivity.this, RegisterActivity.class));
+            }
+        });
 
+        forgotPasswordTextView = findViewById(R.id.forgotPasswordTextView);
+        forgotPasswordTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LogInActivity.this, ForgotPasswordActivity.class));
             }
         });
 
