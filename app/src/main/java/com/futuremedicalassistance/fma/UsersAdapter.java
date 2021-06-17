@@ -13,16 +13,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
-import java.util.ArrayList;
-
-import de.hdodenhof.circleimageview.CircleImageView;
+import java.util.List;
 
 public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UsersViewHolder> {
 
     Context context;
-    ArrayList<Users> list;
+    List<Users> list;
 
-    public UsersAdapter(Context context, ArrayList<Users> list) {
+    public UsersAdapter(Context context, List<Users> list) {
         this.context = context;
         this.list = list;
     }

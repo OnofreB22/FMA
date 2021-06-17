@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         adapter = new FragmentAdapter(fm, getLifecycle());
         viewPager.setAdapter(adapter);
 
-        tabLayout.addTab(tabLayout.newTab().setText("First"));
+        tabLayout.addTab(tabLayout.newTab().setText("Chats"));
         tabLayout.addTab(tabLayout.newTab().setText("Medicos"));
         tabLayout.addTab(tabLayout.newTab().setText("Guias"));
 

@@ -21,7 +21,7 @@ public class FragmentAdapter extends FragmentStateAdapter {
             case 2:
                 return new GuideFragment();
         }
-        return  new FirstFragment();
+        return  new ChatsFragment();
     }
 
     @Override

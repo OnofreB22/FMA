@@ -26,7 +26,7 @@ public class UsersFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private UsersAdapter usersAdapter;
-    private ArrayList<Users> list;
+    private List<Users> list;
     DatabaseReference databaseReference;
 
     public UsersFragment() {
