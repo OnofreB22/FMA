@@ -32,10 +32,11 @@ public class MessageActivity extends AppCompatActivity {
 
     TextView username;
     ImageView imageView;
-
     RecyclerView recyclerView;
     EditText messageEditText;
     ImageButton sendButton;
+
+    String userId;
 
     FirebaseUser firebaseUser;
     DatabaseReference reference;
@@ -62,7 +63,7 @@ public class MessageActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
 
         intent = getIntent();
-        String userId = intent.getStringExtra("userId");
+        userId = intent.getStringExtra("userId");
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference("Users").child(userId);
@@ -113,6 +114,25 @@ public class MessageActivity extends AppCompatActivity {
         hashMap.put("message", message);
 
         reference.child("Chats").push().setValue(hashMap);
+
+        final DatabaseReference chatRef = FirebaseDatabase.getInstance()
+                .getReference("ChatList")
+                .child(firebaseUser.getUid())
+                .child(userId);
+
+        chatRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(!snapshot.exists()){
+                    chatRef.child("id").setValue(userId);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     private void readMessage(String myId, String userId){
