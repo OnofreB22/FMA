@@ -25,8 +25,7 @@ import java.util.List;
 public class ChatsFragment extends Fragment {
 
     private UsersAdapter usersAdapter;
-    private List<Users> mUsers;
-    private List<Users> usersList;
+    private List<Users> mUsers, usersList;
 
     FirebaseUser firebaseUser;
     DatabaseReference reference;
