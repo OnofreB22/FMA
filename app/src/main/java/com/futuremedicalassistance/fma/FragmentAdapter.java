@@ -20,12 +20,14 @@ public class FragmentAdapter extends FragmentStateAdapter {
                 return new UsersFragment();
             case 2:
                 return new GuideFragment();
+            case 3:
+                return new ConfigFragment();
         }
         return  new ChatsFragment();
     }
 
     @Override
     public int getItemCount() {
-        return 3;
+        return 4;
     }
 }

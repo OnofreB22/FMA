@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.addTab(tabLayout.newTab().setText("Chats"));
         tabLayout.addTab(tabLayout.newTab().setText("Medicos"));
         tabLayout.addTab(tabLayout.newTab().setText("Guias"));
+        tabLayout.addTab(tabLayout.newTab().setText("Configuracion"));
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
