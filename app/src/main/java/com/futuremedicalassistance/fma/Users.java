@@ -2,34 +2,30 @@ package com.futuremedicalassistance.fma;
 
 public class Users {
 
-    String name, lastName, imageURL, id, status;
+    String name, lastName, ImageURL, Id;
 
     public Users() {
     }
 
-    public Users(String name, String lastName, String imageURL,String id,String status) {
+    public Users(String name, String lastName) {
         this.name = name;
         this.lastName = lastName;
-        this.imageURL = imageURL;
-        this.id = id;
-        this.status = status;
-
     }
 
     public String getId() {
-        return id;
+        return Id;
     }
 
     public void setId(String id) {
-        this.id = id;
+        Id = id;
     }
 
     public String getImageURL() {
-        return imageURL;
+        return ImageURL;
     }
 
     public void setImageURL(String imageURL) {
-        this.imageURL = imageURL;
+        ImageURL = imageURL;
     }
 
     public String getName() {
@@ -46,13 +42,5 @@ public class Users {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 }

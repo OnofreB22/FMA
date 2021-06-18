@@ -161,26 +161,4 @@ public class MessageActivity extends AppCompatActivity {
             }
         });
     }
-
-    private void CheckStatus(String status){
-        reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
-
-        HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("status", status);
-
-        reference.updateChildren(hashMap);
-
-    }
-
-    @Override
-    protected void onResume(){
-        super.onResume();
-        CheckStatus("online");
-    }
-
-    @Override
-    protected  void onPause(){
-        super.onPause();
-        CheckStatus("offline");
-    }
 }

@@ -9,15 +9,11 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.github.barteksc.pdfviewer.PDFView;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import java.util.HashMap;
 
 public class GuideViewActivity extends AppCompatActivity {
 
@@ -26,7 +22,6 @@ public class GuideViewActivity extends AppCompatActivity {
 
     DatabaseReference reference;
     Intent intent;
-    FirebaseUser firebaseUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +30,6 @@ public class GuideViewActivity extends AppCompatActivity {
 
         progressBar = findViewById(R.id.progressBar);
         pdfView = findViewById(R.id.pdfView);
-
-        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         intent = getIntent();
         String guideId = intent.getStringExtra("guideId");
@@ -60,27 +53,5 @@ public class GuideViewActivity extends AppCompatActivity {
                 Toast.makeText(GuideViewActivity.this, "Error", Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    private void CheckStatus(String status){
-        reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
-
-        HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("status", status);
-
-        reference.updateChildren(hashMap);
-
-    }
-
-    @Override
-    protected void onResume(){
-        super.onResume();
-        CheckStatus("online");
-    }
-
-    @Override
-    protected  void onPause(){
-        super.onPause();
-        CheckStatus("offline");
     }
 }
