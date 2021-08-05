@@ -28,6 +28,7 @@ public class UsersFragment extends Fragment {
     private UsersAdapter usersAdapter;
     private List<Users> list;
     DatabaseReference databaseReference;
+    FirebaseUser firebaseUser;
 
     public UsersFragment() {
     }
@@ -42,6 +43,7 @@ public class UsersFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         databaseReference = FirebaseDatabase.getInstance().getReference("Users");
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         list = new ArrayList<>();
         ReadUsers();
@@ -53,12 +55,16 @@ public class UsersFragment extends Fragment {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                list.clear();
+
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()){
                     Users users = dataSnapshot.getValue(Users.class);
-                    list.add(users);
+
+                    if(!users.getId().equals(firebaseUser.getUid())){
+                        list.add(users);
+                    }
 
                 }
-
                 usersAdapter = new UsersAdapter(getContext(),list);
                 usersAdapter.notifyDataSetChanged();
                 recyclerView.setAdapter(usersAdapter);

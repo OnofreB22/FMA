@@ -37,6 +37,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UsersViewHol
         Users users = list.get(position);
         holder.nameTextView.setText(users.getName());
         holder.lastNameTextView.setText(users.getLastName());
+        holder.statusTextView.setText(users.getStatus());
 
         if(users.getImageURL().equals("default")){
             holder.imageView.setImageResource(R.mipmap.ic_launcher);
@@ -62,7 +63,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UsersViewHol
 
     public static class UsersViewHolder extends RecyclerView.ViewHolder{
 
-        TextView nameTextView, lastNameTextView;
+        TextView nameTextView, lastNameTextView, statusTextView;
         ImageView imageView;
 
         public UsersViewHolder(@NonNull View itemView) {
@@ -70,6 +71,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UsersViewHol
 
             nameTextView = (TextView)itemView.findViewById(R.id.nameTextView);
             lastNameTextView = (TextView)itemView.findViewById(R.id.lastNameTextView);
+            statusTextView = (TextView)itemView.findViewById(R.id.statusTextView);
             imageView = (ImageView)itemView.findViewById(R.id.imageView);
         }
     }
