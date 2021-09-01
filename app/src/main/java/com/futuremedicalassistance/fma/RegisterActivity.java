@@ -148,6 +148,7 @@ public class RegisterActivity extends AppCompatActivity {
                     hashMap.put("phone", phone);
                     hashMap.put("birthPlace", birthPlace);
                     hashMap.put("imageURL", "default");
+                    hashMap.put("userType", "default");
 
                     myReference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override

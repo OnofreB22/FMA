@@ -60,10 +60,9 @@ public class UsersFragment extends Fragment {
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()){
                     Users users = dataSnapshot.getValue(Users.class);
 
-                    if(!users.getId().equals(firebaseUser.getUid())){
+                    if(users.getUserType().equals("doctor")){
                         list.add(users);
                     }
-
                 }
                 usersAdapter = new UsersAdapter(getContext(),list);
                 usersAdapter.notifyDataSetChanged();

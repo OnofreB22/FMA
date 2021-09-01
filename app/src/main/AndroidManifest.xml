@@ -9,8 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FMA">
-        <activity android:name=".ForgotPasswordActivity"></activity>
-        <activity android:name=".GuideViewActivity" />
+        <activity
+            android:name=".MainDoctorActivity"
+            android:exported="true" />
+        <activity android:name=".ForgotPasswordActivity" />
         <activity android:name=".GuideActivity" />
         <activity android:name=".MessageActivity" />
         <activity android:name=".UsersActivity" />

@@ -4,10 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.widget.ViewPager2;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
@@ -17,30 +14,25 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
 
-public class MainActivity extends AppCompatActivity {
+public class MainDoctorActivity extends AppCompatActivity {
 
     TabLayout tabLayout;
     ViewPager2 viewPager;
-    FragmentAdapter adapter;
-    DatabaseReference reference;
-    FirebaseUser firebaseUser;
+    DoctorFragmentAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main_doctor);
 
         tabLayout = findViewById(R.id.tabLayout);
         viewPager = findViewById(R.id.viewPager);
 
         FragmentManager fm = getSupportFragmentManager();
-        adapter = new FragmentAdapter(fm, getLifecycle());
+        adapter = new DoctorFragmentAdapter(fm, getLifecycle());
         viewPager.setAdapter(adapter);
 
-        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-
         tabLayout.addTab(tabLayout.newTab().setText("Chats"));
-        tabLayout.addTab(tabLayout.newTab().setText("Medicos"));
         tabLayout.addTab(tabLayout.newTab().setText("Config"));
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -66,26 +58,5 @@ public class MainActivity extends AppCompatActivity {
                 tabLayout.selectTab(tabLayout.getTabAt(position));
             }
         });
-    }
-
-    private void CheckStatus(String status){
-        reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
-
-        HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("status", status);
-
-        reference.updateChildren(hashMap);
-    }
-
-    @Override
-    protected void onResume(){
-        super.onResume();
-        CheckStatus("Online");
-    }
-
-    @Override
-    protected void onPause(){
-        super.onPause();
-        CheckStatus("Offline");
     }
 }

@@ -2,7 +2,7 @@ package com.futuremedicalassistance.fma;
 
 public class Users {
 
-    String name, lastName, ImageURL, Id, status;
+    String name, lastName, ImageURL, Id, status, userType;
 
     public Users() {
     }
@@ -10,6 +10,14 @@ public class Users {
     public Users(String name, String lastName) {
         this.name = name;
         this.lastName = lastName;
+    }
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
     }
 
     public String getStatus() {

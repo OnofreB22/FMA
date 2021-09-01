@@ -16,6 +16,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class LogInActivity extends AppCompatActivity {
     EditText emailEditText, passwordEditText;
@@ -30,9 +35,27 @@ public class LogInActivity extends AppCompatActivity {
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         if(firebaseUser != null){
-            startActivity(new Intent(LogInActivity.this, MainActivity.class));
-            finish();
+            DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
+            String userId = firebaseUser.getUid();
 
+            reference.child(userId).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    Users users = snapshot.getValue(Users.class);
+
+                    if(users.getUserType().equals("doctor")){
+                        startActivity(new Intent(LogInActivity.this, MainDoctorActivity.class));
+                    }else{
+                        startActivity(new Intent(LogInActivity.this, MainActivity.class));
+                    }
+                    finish();
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
         }
     }
 
@@ -78,9 +101,31 @@ public class LogInActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()){
-                                startActivity(new Intent(LogInActivity.this, MainActivity.class));
-                                finish();
+                                firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
+                                if(firebaseUser != null){
+                                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
+                                    String userId = firebaseUser.getUid();
+
+                                    reference.child(userId).addValueEventListener(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            Users users = snapshot.getValue(Users.class);
+
+                                            if(users.getUserType().equals("doctor")){
+                                                startActivity(new Intent(LogInActivity.this, MainDoctorActivity.class));
+                                            }else{
+                                                startActivity(new Intent(LogInActivity.this, MainActivity.class));
+                                            }
+                                            finish();
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                        }
+                                    });
+                                }
                             }else{
                                 Toast.makeText(LogInActivity.this, "email o contrasena incorrecta", Toast.LENGTH_SHORT).show();
 
